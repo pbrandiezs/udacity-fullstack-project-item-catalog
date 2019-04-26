@@ -331,7 +331,7 @@ def restaurantsJSON():
 def showItemCatalog():
     DBSession = sessionmaker(bind=engine)
     session = DBSession()
-    items = session.query(ItemCatalog).order_by(asc(category_name, item_name))
+    items = session.query(ItemCatalog).order_by(asc(ItemCatalog.category_name), asc(ItemCatalog.item_name))
     if 'username' not in login_session:
       return render_template('publicitems.html', items = items)
     else:
