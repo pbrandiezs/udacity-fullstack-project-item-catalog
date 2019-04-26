@@ -44,8 +44,8 @@ class User(Base):
         return user_id
 
 
-class Category(Base):
-    __tablename__ = 'product'
+class ItemCatalog(Base):
+    __tablename__ = 'ItemCatalog'
     id = Column(Integer, primary_key=True)
     category_name = Column(String)
     item_name = Column(String)
