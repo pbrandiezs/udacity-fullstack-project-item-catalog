@@ -325,17 +325,17 @@ def restaurantsJSON():
     return jsonify(restaurants= [r.serialize for r in restaurants])
 
 
-#Show all restaurants
+#Show all Catalog Items
 @app.route('/')
-@app.route('/restaurant/')
-def showRestaurants():
+@app.route('/items/')
+def showItemCatalog():
     DBSession = sessionmaker(bind=engine)
     session = DBSession()
-    restaurants = session.query(Restaurant).order_by(asc(Restaurant.name))
+    items = session.query(ItemCatalog).order_by(asc(category_name, item_name))
     if 'username' not in login_session:
-      return render_template('publicrestaurants.html', restaurants = restaurants)
+      return render_template('publicitems.html', items = items)
     else:
-      return render_template('restaurants.html', restaurants = restaurants)
+      return render_template('items.html', items = items)
 
 #Create a new restaurant
 @app.route('/restaurant/new/', methods=['GET','POST'])
