@@ -337,26 +337,27 @@ def showItemCatalog():
     else:
       return render_template('items.html', items = items)
 
-#Create a new restaurant
-@app.route('/restaurant/new/', methods=['GET','POST'])
-def newRestaurant():
+#Create a new item
+@app.route('/item/new/', methods=['GET','POST'])
+def newCategory():
     DBSession = sessionmaker(bind=engine)
     session = DBSession()
     if 'username' not in login_session:
       return redirect('/login')
     if request.method == 'POST':
-      newRestaurant = Restaurant(name = request.form['name'],
+      newItem = Item(category = request.form['category'],
+        item = request.form['item'],
         user_id=login_session['user_id'])
 
-      session.add(newRestaurant)
-      flash('New Restaurant %s Successfully Created' % newRestaurant.name)
+      session.add(newItem)
+      flash('New Item %s Successfully Created' % newItem.name)
       session.commit()
-      return redirect(url_for('showRestaurants'))
+      return redirect(url_for('showItemCatalog'))
     else:
-      return render_template('newRestaurant.html')
+      return render_template('newItem.html')
 
-#Edit a restaurant
-@app.route('/restaurant/<int:restaurant_id>/edit/', methods = ['GET', 'POST'])
+#Edit a item
+@app.route('/item/<int:id>/edit/', methods = ['GET', 'POST'])
 def editRestaurant(restaurant_id):
     DBSession = sessionmaker(bind=engine)
     session = DBSession()
@@ -402,8 +403,8 @@ def showMenu(restaurant_id):
      
 
 
-#Create a new menu item
-@app.route('/restaurant/<int:restaurant_id>/menu/new/',methods=['GET','POST'])
+#Create a new item
+@app.route('/itemsrestaurant/<int:restaurant_id>/menu/new/',methods=['GET','POST'])
 def newMenuItem(restaurant_id):
     DBSession = sessionmaker(bind=engine)
     session = DBSession()
