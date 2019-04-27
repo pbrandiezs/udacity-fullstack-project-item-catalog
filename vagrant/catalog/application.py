@@ -339,7 +339,7 @@ def showItemCatalog():
 
 #Create a new item
 @app.route('/item/new/', methods=['GET','POST'])
-def newCategory():
+def newItem():
     DBSession = sessionmaker(bind=engine)
     session = DBSession()
     if 'username' not in login_session:
@@ -358,17 +358,18 @@ def newCategory():
 
 #Edit a item
 @app.route('/item/<int:id>/edit/', methods = ['GET', 'POST'])
-def editRestaurant(restaurant_id):
+def editItem(id):
     DBSession = sessionmaker(bind=engine)
     session = DBSession()
-    editedRestaurant = session.query(Restaurant).filter_by(id = restaurant_id).one()
+    editedItem = session.query(Item).filter_by(id = id).one()
     if request.method == 'POST':
-        if request.form['name']:
-          editedRestaurant.name = request.form['name']
-          flash('Restaurant Successfully Edited %s' % editedRestaurant.name)
-          return redirect(url_for('showRestaurants'))
+        if request.form['name'] and request.form['category']:
+          editedItem.category = request.form['category']
+          editedItem.name = request.form['name']
+          flash('Item Successfully Edited %s' % editedItem.name)
+          return redirect(url_for('showItems'))
     else:
-      return render_template('editRestaurant.html', restaurant = editedRestaurant)
+      return render_template('editItem.html', item = editedItem)
 
 
 #Delete a restaurant
