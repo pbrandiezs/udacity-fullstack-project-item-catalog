@@ -345,8 +345,9 @@ def newItem():
     if 'username' not in login_session:
       return redirect('/login')
     if request.method == 'POST':
-      newItem = Item(category = request.form['category'],
-        item = request.form['item'],
+      newItem = ItemCatalog(category_name = request.form['category_name'],
+        item_name = request.form['item_name'],
+        item_description = request.form['item_description'],
         user_id=login_session['user_id'])
 
       session.add(newItem)
