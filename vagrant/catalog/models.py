@@ -50,6 +50,8 @@ class ItemCatalog(Base):
     category_name = Column(String)
     item_name = Column(String)
     item_description = Column(String)
+    user_id = Column(Integer, ForeignKey('user.id'))
+
     @property
     def serialize(self):
         """Return object data in easily serializeable format"""
