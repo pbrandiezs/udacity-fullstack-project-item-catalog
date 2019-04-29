@@ -14,10 +14,12 @@ Base = declarative_base()
 secret_key = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in xrange(32))
 
 class User(Base):
-    __tablename__ = 'user'
+    __tablename__ = 'User'
     id = Column(Integer, primary_key=True)
-    username = Column(String(32), index=True)
-    password_hash = Column(String(64))
+    username = Column(String, index=True)
+    password_hash = Column(String)
+    email = Column(String)
+    picture = Column(String)
 
     def hash_password(self, password):
         self.password_hash = pwd_context.hash(password)
@@ -50,7 +52,7 @@ class ItemCatalog(Base):
     category_name = Column(String)
     item_name = Column(String)
     item_description = Column(String)
-    user_id = Column(Integer, ForeignKey('user.id'))
+    user_id = Column(Integer, ForeignKey('User.id'))
 
     @property
     def serialize(self):

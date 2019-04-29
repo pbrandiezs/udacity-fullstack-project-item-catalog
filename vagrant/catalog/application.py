@@ -138,7 +138,7 @@ def gconnect():
 def createUser(login_session):
     DBSession = sessionmaker(bind=engine)
     session = DBSession()
-    newUser = User(name=login_session['username'], email=login_session[
+    newUser = User(username=login_session['username'], email=login_session[
                    'email'], picture=login_session['picture'])
     session.add(newUser)
     session.commit()
@@ -221,16 +221,16 @@ def fbconnect():
         and replace the remaining quotes with nothing so that it can be used directly in the graph
         api calls
     '''
-    print "result before split is: %s"% result
+    print "--> result before split is: %s"% result
     token = result.split(',')[0].split(':')[1].replace('"', '')
-    print "token is: %s"% token
+    print "--> token is: %s"% token
     url = 'https://graph.facebook.com/v2.8/me?access_token=%s&fields=name,id,email' % token
     h = httplib2.Http()
     result = h.request(url, 'GET')[1]
-    print "url sent for API access:%s"% url
-    print "API JSON result: %s" % result
+    print "--> url sent for API access:%s"% url
+    print "--> API JSON result: %s" % result
     data=json.loads(result)
-    print "data result: %s" % data
+    print "--> data result: %s" % data
     login_session['provider'] = 'facebook'
     login_session['username'] = data["name"]
     login_session['email'] = data["email"]
@@ -246,7 +246,7 @@ def fbconnect():
     data = json.loads(result)
 
     login_session['picture'] = data["data"]["url"]
-
+    print "--> picture is: %s" % login_session['picture']
     # see if user exists
     user_id = getUserID(login_session['email'])
     if not user_id:
@@ -294,10 +294,10 @@ def disconnect():
         del login_session['user_id']
         del login_session['provider']
         flash("You have successfully been logged out.")
-        return redirect(url_for('showRestaurants'))
+        return redirect(url_for('showItemCatalog'))
     else:
         flash("You were not logged in to begin with!")
-        redirect(url_for('showRestaurants'))
+        redirect(url_for('showItemCatalog'))
 
 
 #JSON APIs to view Restaurant Information
