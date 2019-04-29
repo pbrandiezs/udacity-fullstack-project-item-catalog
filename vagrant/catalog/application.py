@@ -415,7 +415,7 @@ def showItem(item_id):
     if 'username' not in login_session:
         return render_template('publicitems.html', items = items)
     else:
-        return render_template('items.html', items = items)
+        return render_template('item.html', item = item)
 
 
 #Create a new item
