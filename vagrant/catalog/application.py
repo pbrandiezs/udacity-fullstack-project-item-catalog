@@ -331,11 +331,16 @@ def restaurantsJSON():
 def showItemCatalog():
     DBSession = sessionmaker(bind=engine)
     session = DBSession()
-    items = session.query(ItemCatalog).order_by(asc(ItemCatalog.category_name), asc(ItemCatalog.item_name))
+    # items = session.query(ItemCatalog).order_by(asc(ItemCatalog.category_name), asc(ItemCatalog.item_name))
+    items = session.query(ItemCatalog)
+    print "--> In /"
+    # print items
     if 'username' not in login_session:
       return render_template('publicitems.html', items = items)
     else:
+      print "--> In / calling render_template('items.html')"
       return render_template('items.html', items = items)
+      # return "items"
 
 #Create a new item
 @app.route('/item/new/', methods=['GET','POST'])
@@ -389,19 +394,23 @@ def deleteRestaurant(restaurant_id):
     else:
       return render_template('deleteRestaurant.html',restaurant = restaurantToDelete)
 
-#Show a restaurant menu
-@app.route('/restaurant/<int:restaurant_id>/')
-@app.route('/restaurant/<int:restaurant_id>/menu/')
-def showMenu(restaurant_id):
+#Show an item
+@app.route('/item/<int:item_id>/')
+def showItem(item_id):
     DBSession = sessionmaker(bind=engine)
     session = DBSession()
-    restaurant = session.query(Restaurant).filter_by(id = restaurant_id).one()
-    creator = getUserInfo(restaurant.user_id)
-    items = session.query(MenuItem).filter_by(restaurant_id = restaurant_id).all()
+    print "in showItem"
+    print item_id
+    item = session.query(ItemCatalog).filter_by(id = item_id).one()
+    print item
+    # creator = getUserInfo(ItemCatalog.user_id)
+    #items = session.query(ItemCatalog).filter_by(id = ItemCatalog.id).all()
+    # print items
     if 'username' not in login_session or creator.id != login_session['user_id']:
-      return render_template('publicmenu.html', items = items, restaurant = restaurant, creator = creator)
+      return render_template('publicmenu.html', items = items)
     else:
-      return render_template('menu.html', items = items, restaurant = restaurant, creator = creator)
+      return "showItem items"
+      # return render_template('items.html', items = items)
      
 
 
