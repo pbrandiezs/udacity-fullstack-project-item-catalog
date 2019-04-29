@@ -351,7 +351,7 @@ def newItem():
         user_id=login_session['user_id'])
 
       session.add(newItem)
-      flash('New Item %s Successfully Created' % newItem.name)
+      flash('New Item %s Successfully Created' % newItem.item_name)
       session.commit()
       return redirect(url_for('showItemCatalog'))
     else:
