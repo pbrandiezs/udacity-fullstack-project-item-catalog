@@ -469,7 +469,12 @@ def deleteMenuItem(restaurant_id,menu_id):
     else:
         return render_template('deleteMenuItem.html', item = itemToDelete)
 
-
+@app.route('/items/JSON')
+def itemsJSON():
+    DBSession = sessionmaker(bind=engine)
+    session = DBSession()
+    items = session.query(ItemCatalog).all()
+    return jsonify(items = [item.serialize for item in items])
 
 
 if __name__ == '__main__':
