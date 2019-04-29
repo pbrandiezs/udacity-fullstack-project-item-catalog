@@ -150,6 +150,7 @@ def getUserInfo(user_id):
     DBSession = sessionmaker(bind=engine)
     session = DBSession()
     user = session.query(User).filter_by(id=user_id).one()
+    print "--> In getUserInfo user.id: %s" % user.id
     return user
 
 
@@ -337,7 +338,7 @@ def showItemCatalog():
     # print items
     if 'username' not in login_session:
       print "--> In / calling render_template('public')"
-      return render_template('items.html', items = items)
+      return render_template('publicitems.html', items = items)
     else:
       print "--> In / calling render_template('items.html')"
       return render_template('items.html', items = items)
@@ -400,19 +401,21 @@ def deleteRestaurant(restaurant_id):
 def showItem(item_id):
     DBSession = sessionmaker(bind=engine)
     session = DBSession()
-    print "in showItem"
-    print item_id
+    print "--> in showItem"
+    print "--> item_id: %s" % item_id
     item = session.query(ItemCatalog).filter_by(id = item_id).one()
     print item
-    # creator = getUserInfo(ItemCatalog.user_id)
-    #items = session.query(ItemCatalog).filter_by(id = ItemCatalog.id).all()
-    # print items
-    if 'username' not in login_session or creator.id != login_session['user_id']:
-      return render_template('publicmenu.html', items = items)
+    creator = getUserInfo(ItemCatalog.user_id)
+    items = session.query(ItemCatalog).filter_by(id = ItemCatalog.id).all()
+    print "--> creator: %s" % creator
+    print "--> creator.id: %s" % creator.id
+    print "--> items: %s" % items
+
+    #Check if logged in
+    if 'username' not in login_session:
+        return render_template('publicitems.html', items = items)
     else:
-      return "showItem items"
-      # return render_template('items.html', items = items)
-     
+        return render_template('items.html', items = items)
 
 
 #Create a new item
