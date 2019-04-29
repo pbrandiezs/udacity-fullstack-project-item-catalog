@@ -336,7 +336,8 @@ def showItemCatalog():
     print "--> In /"
     # print items
     if 'username' not in login_session:
-      return render_template('publicitems.html', items = items)
+      print "--> In / calling render_template('public')"
+      return render_template('items.html', items = items)
     else:
       print "--> In / calling render_template('items.html')"
       return render_template('items.html', items = items)
