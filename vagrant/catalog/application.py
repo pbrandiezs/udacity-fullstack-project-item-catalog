@@ -315,7 +315,7 @@ def newItem():
     DBSession = sessionmaker(bind=engine)
     session = DBSession()
     if 'username' not in login_session:
-      return redirect('/login')
+        return redirect('/login')
     if request.method == 'POST':
         newItem = ItemCatalog(category_name = request.form['category_name'],
         item_name = request.form['item_name'],
@@ -335,6 +335,10 @@ def editItem(id):
     DBSession = sessionmaker(bind=engine)
     session = DBSession()
     editedItem = session.query(ItemCatalog).filter_by(id = id).one()
+    if 'username' not in login_session:
+        # not logged in, display public items
+        flash("Login required to edit!")
+        return redirect(url_for('showItemCatalog'))
     if request.method == 'POST':
         if request.form['item_name'] and request.form['category_name'] and request.form['item_description']:
             editedItem.category_name = request.form['category_name']
