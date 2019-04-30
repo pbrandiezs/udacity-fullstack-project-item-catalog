@@ -432,6 +432,13 @@ def itemJSON(item_id):
             }]
         })
 
+# JSON endpoint to show all users
+@app.route('/users/JSON')
+def usersJSON():
+    DBSession = sessionmaker(bind=engine)
+    session = DBSession()
+    items = session.query(Users).all()
+    return jsonify(items = [item.serialize for item in items])
 
 if __name__ == '__main__':
   app.secret_key = 'super_secret_key'
