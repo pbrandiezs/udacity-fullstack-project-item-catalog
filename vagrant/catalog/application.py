@@ -437,8 +437,8 @@ def itemJSON(item_id):
 def usersJSON():
     DBSession = sessionmaker(bind=engine)
     session = DBSession()
-    items = session.query(Users).all()
-    return jsonify(items = [item.serialize for item in items])
+    users = session.query(User).all()
+    return jsonify(users = [user.serialize for user in users])
 
 if __name__ == '__main__':
   app.secret_key = 'super_secret_key'
