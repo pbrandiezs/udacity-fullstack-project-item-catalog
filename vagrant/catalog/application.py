@@ -368,15 +368,17 @@ def newItem():
 def editItem(id):
     DBSession = sessionmaker(bind=engine)
     session = DBSession()
-    editedItem = session.query(Item).filter_by(id = id).one()
+    editedItem = session.query(ItemCatalog).filter_by(id = id).one()
     if request.method == 'POST':
-        if request.form['name'] and request.form['category']:
-          editedItem.category = request.form['category']
-          editedItem.name = request.form['name']
-          flash('Item Successfully Edited %s' % editedItem.name)
-          return redirect(url_for('showItems'))
+        if request.form['item_name'] and request.form['category_name'] and request.form['item_description']:
+            editedItem.category_name = request.form['category_name']
+            editedItem.item_name = request.form['item_name']
+            editedItem.item_description = request.form['item_description']
+            session.add(editedItem)
+            session.commit()
+            return redirect(url_for('showItemCatalog'))
     else:
-      return render_template('editItem.html', item = editedItem)
+        return render_template('editItem.html', item = editedItem)
 
 
 #Delete a restaurant

@@ -1,0 +1,36 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+	<div class="row divider green">
+		<div class="col-md-12"></div>
+	</div>
+	<div class="row banner menu">
+		<div class="col-md-11 col-md-offset-1 padding-none">
+			<h1>Ace's High Aviation - Edit {{item.item_name}}</h1>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6 col-md-offset-1 padding-top">
+			<form action="#" method = "post">
+				<div class="form-group">
+					<label for="Category">Category:</label>
+					<input type ="text" maxlength="50" class="form-control" name="category_name"value="{{ item.category_name }}">
+
+					<label for="Item Name">Item Name:</label>
+					<input type ="text" maxlength="50" class="form-control" name="item_name" value="{{ item.item_name }}">
+					
+					<label for="Item Description">Item Description:</label>
+					<input type ="text" class="form-control" maxlength="250" rows="3" name="item_description" value="{{ item.item_description }}">
+					
+					<div class="padding-bottom"></div>
+					<button type="submit" class="btn btn-default" id="submit" type="submit">
+					<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>Save</button>
+					<a href = '{{url_for('showItemCatalog')}}'>
+						<button class="btn btn-default delete">
+						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancel</button>
+					</a>
+				</div>
+			</form>
+		</div>
+	</div>
+{% endblock %}
