@@ -475,12 +475,45 @@ def deleteMenuItem(restaurant_id,menu_id):
     else:
         return render_template('deleteMenuItem.html', item = itemToDelete)
 
+# JSON endpoint to show all items
 @app.route('/items/JSON')
 def itemsJSON():
     DBSession = sessionmaker(bind=engine)
     session = DBSession()
     items = session.query(ItemCatalog).all()
     return jsonify(items = [item.serialize for item in items])
+
+# JSON endpoint to show a specific item
+@app.route('/item/<int:item_id>/JSON')
+def itemJSON(item_id):
+    DBSession = sessionmaker(bind=engine)
+    session = DBSession()
+    item = session.query(ItemCatalog).filter_by(id = item_id).one()
+    creator = getUserInfo(ItemCatalog.user_id)
+    items = session.query(ItemCatalog).filter_by(id = ItemCatalog.id).all()
+    username = session.query(User.username).filter_by(id = creator.id).one()
+    #Check if logged in
+    if 'username' not in login_session:
+        #not logged in
+        return jsonify({"item": [
+            {
+                "category_name": item.category_name,
+                "id": item.id,
+                "item_description": item.item_description,
+                "item_name": item.item_name,
+            }]
+        })
+    else:
+        # logged in, include creator with the result
+        return jsonify({"item": [
+            {
+                "category_name": item.category_name,
+                "id": item.id,
+                "item_description": item.item_description,
+                "item_name": item.item_name,
+                "creator": username[0]
+            }]
+        })
 
 
 if __name__ == '__main__':
