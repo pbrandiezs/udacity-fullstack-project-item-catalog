@@ -327,6 +327,7 @@ def restaurantsJSON():
 
 
 #Show all Catalog Items
+#This is an example of CRUD: Read
 @app.route('/')
 @app.route('/items/')
 def showItemCatalog():
@@ -334,15 +335,13 @@ def showItemCatalog():
     session = DBSession()
     # items = session.query(ItemCatalog).order_by(asc(ItemCatalog.category_name), asc(ItemCatalog.item_name))
     items = session.query(ItemCatalog)
-    print "--> In /"
-    # print items
+    # check if logged in
     if 'username' not in login_session:
-      print "--> In / calling render_template('public')"
-      return render_template('publicitems.html', items = items)
+        # not logged in, display public items
+        return render_template('publicitems.html', items = items)
     else:
-      print "--> In / calling render_template('items.html')"
-      return render_template('items.html', items = items)
-      # return "items"
+        # logged in, display items (including creator)
+        return render_template('items.html', items = items)
 
 #Create a new item
 @app.route('/item/new/', methods=['GET','POST'])
