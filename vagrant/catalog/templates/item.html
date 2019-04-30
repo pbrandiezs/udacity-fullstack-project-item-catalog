@@ -42,7 +42,7 @@
 		<div class="col-md-1"></div>
 	</div>
 	
-		<a href = "{{url_for('showItem', item_id = item.id)}}">
+		<a href = "{{url_for('showItem', item_id = item.id, username = username)}}">
 			<div class="row">
 				<div class="col-md-1"></div>
 					<div class="col-md-10 item-list">
@@ -50,6 +50,7 @@
 						<h3>Item Name: {{item.item_name}} </h3>
 						<h3>Item Description: {{item.item_description}}</h3>
 						<h3>User id: {{item.user_id}}</h3>
+						<h3>Creator: {{username}}</h3>
 					</div>
 				<div class="col-md-1"></div>
 			</div>

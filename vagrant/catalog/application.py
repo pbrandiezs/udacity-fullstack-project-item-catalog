@@ -410,12 +410,17 @@ def showItem(item_id):
     print "--> creator: %s" % creator
     print "--> creator.id: %s" % creator.id
     print "--> items: %s" % items
+    
+    picture = session.query(User.picture).filter_by(id = creator.id).one()
+    print "--> picture: %s" % picture
+    username = session.query(User.username).filter_by(id = creator.id).one()
+    print "--> username: %s" % username
 
     #Check if logged in
     if 'username' not in login_session:
         return render_template('publicitems.html', items = items)
     else:
-        return render_template('item.html', item = item)
+        return render_template('item.html', item = item, username = username[0])
 
 
 #Create a new item
