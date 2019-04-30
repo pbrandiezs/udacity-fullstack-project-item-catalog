@@ -381,21 +381,28 @@ def editItem(id):
         return render_template('editItem.html', item = editedItem)
 
 
-#Delete a restaurant
-@app.route('/restaurant/<int:restaurant_id>/delete/', methods = ['GET','POST'])
-def deleteRestaurant(restaurant_id):
+#Delete an item
+@app.route('/item/<int:id>/delete/', methods = ['GET','POST'])
+def deleteItem(id):
     DBSession = sessionmaker(bind=engine)
     session = DBSession()
-    restaurantToDelete = session.query(Restaurant).filter_by(id = restaurant_id).one()
-    if restaurantToDelete.user_id != login_session['user_id']:
-      return "<script>function myFunction() {alert('You are not authorized to delete this restaurant.  Please create your own restaurant in order to delete.');}</script><body onload='myFunction()''>"
+    itemToDelete = session.query(ItemCatalog).filter_by(id = id).one()
+    # check if logged in
+    if 'username' not in login_session:
+        # not logged in, display public items
+        flash("Login required to delete!")
+        return redirect(url_for('showItemCatalog'))
+    if itemToDelete.user_id != login_session['user_id']:
+        return "<script>function myFunction() {alert('You are not authorized to delete this item.  Please create your own item in order to delete.');}</script><body onload='myFunction()''>"
     if request.method == 'POST':
-      session.delete(restaurantToDelete)
-      flash('%s Successfully Deleted' % restaurantToDelete.name)
-      session.commit()
-      return redirect(url_for('showRestaurants', restaurant_id = restaurant_id))
+        session.delete(itemToDelete)
+        flash('%s Successfully Deleted' % itemToDelete.item_name)
+        session.commit()
+        return redirect(url_for('showItemCatalog'))
     else:
-      return render_template('deleteRestaurant.html',restaurant = restaurantToDelete)
+        return render_template('deleteItem.html', item = itemToDelete)
+
+
 
 #Show an item
 @app.route('/item/<int:item_id>/')
