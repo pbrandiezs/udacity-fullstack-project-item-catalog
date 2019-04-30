@@ -415,6 +415,7 @@ def showItem(item_id):
 
     #Check if logged in
     if 'username' not in login_session:
+        flash('Must log in to view item detail!!')
         return render_template('publicitems.html', items = items)
     else:
         return render_template('item.html', item = item, username = username[0])
