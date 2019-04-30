@@ -411,8 +411,6 @@ def showItem(item_id):
     print "--> creator.id: %s" % creator.id
     print "--> items: %s" % items
     
-    picture = session.query(User.picture).filter_by(id = creator.id).one()
-    print "--> picture: %s" % picture
     username = session.query(User.username).filter_by(id = creator.id).one()
     print "--> username: %s" % username
 
