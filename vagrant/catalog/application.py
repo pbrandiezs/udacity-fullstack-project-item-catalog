@@ -129,7 +129,6 @@ def gconnect():
     output += login_session['picture']
     output += ' " style = "width: 300px; height: 300px;border-radius: 150px;-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '
     flash("you are now logged in as %s" % login_session['username'])
-    print "done!"
     return output
 
 # User Helper Functions
@@ -150,7 +149,6 @@ def getUserInfo(user_id):
     DBSession = sessionmaker(bind=engine)
     session = DBSession()
     user = session.query(User).filter_by(id=user_id).one()
-    print "--> In getUserInfo user.id: %s" % user.id
     return user
 
 
@@ -204,8 +202,6 @@ def fbconnect():
       response.headers['Content-Type'] = 'application/json'
       return response
     access_token = request.data
-    print "access token received %s " % access_token
-
     #Exchange token for long-lived server-side token
     app_id = json.loads(open('fb_client_secrets.json', 'r').read())['web']['app_id']
     app_secret = json.loads(open('fb_client_secrets.json', 'r').read())['web']['app_secret']
@@ -222,16 +218,11 @@ def fbconnect():
         and replace the remaining quotes with nothing so that it can be used directly in the graph
         api calls
     '''
-    print "--> result before split is: %s"% result
     token = result.split(',')[0].split(':')[1].replace('"', '')
-    print "--> token is: %s"% token
     url = 'https://graph.facebook.com/v2.8/me?access_token=%s&fields=name,id,email' % token
     h = httplib2.Http()
     result = h.request(url, 'GET')[1]
-    print "--> url sent for API access:%s"% url
-    print "--> API JSON result: %s" % result
     data=json.loads(result)
-    print "--> data result: %s" % data
     login_session['provider'] = 'facebook'
     login_session['username'] = data["name"]
     login_session['email'] = data["email"]
@@ -247,11 +238,10 @@ def fbconnect():
     data = json.loads(result)
 
     login_session['picture'] = data["data"]["url"]
-    print "--> picture is: %s" % login_session['picture']
     # see if user exists
     user_id = getUserID(login_session['email'])
     if not user_id:
-      user_id = createUser(login_session)
+        user_id = createUser(login_session)
     login_session['user_id'] = user_id
 
     output = ''
@@ -301,33 +291,8 @@ def disconnect():
         redirect(url_for('showItemCatalog'))
 
 
-#JSON APIs to view Restaurant Information
-@app.route('/restaurant/<int:restaurant_id>/menu/JSON')
-def restaurantMenuJSON(restaurant_id):
-    DBSession = sessionmaker(bind=engine)
-    session = DBSession()
-    restaurant = session.query(Restaurant).filter_by(id = restaurant_id).one()
-    items = session.query(MenuItem).filter_by(restaurant_id = restaurant_id).all()
-    return jsonify(MenuItems=[i.serialize for i in items])
-
-
-@app.route('/restaurant/<int:restaurant_id>/menu/<int:menu_id>/JSON')
-def menuItemJSON(restaurant_id, menu_id):
-    DBSession = sessionmaker(bind=engine)
-    session = DBSession()
-    Menu_Item = session.query(MenuItem).filter_by(id = menu_id).one()
-    return jsonify(Menu_Item = Menu_Item.serialize)
-
-@app.route('/restaurant/JSON')
-def restaurantsJSON():
-    DBSession = sessionmaker(bind=engine)
-    session = DBSession()
-    restaurants = session.query(Restaurant).all()
-    return jsonify(restaurants= [r.serialize for r in restaurants])
-
-
-#Show all Catalog Items
-#This is an example of CRUD: Read
+# Show all Catalog Items
+# This is an example of CRUD: Read
 @app.route('/')
 @app.route('/items/')
 def showItemCatalog():
@@ -343,7 +308,8 @@ def showItemCatalog():
         # logged in, display items (including creator)
         return render_template('items.html', items = items)
 
-#Create a new item
+# Create a new item
+# This is an example of CRUD: Create
 @app.route('/item/new/', methods=['GET','POST'])
 def newItem():
     DBSession = sessionmaker(bind=engine)
@@ -351,19 +317,19 @@ def newItem():
     if 'username' not in login_session:
       return redirect('/login')
     if request.method == 'POST':
-      newItem = ItemCatalog(category_name = request.form['category_name'],
+        newItem = ItemCatalog(category_name = request.form['category_name'],
         item_name = request.form['item_name'],
         item_description = request.form['item_description'],
         user_id=login_session['user_id'])
-
-      session.add(newItem)
-      flash('New Item %s Successfully Created' % newItem.item_name)
-      session.commit()
-      return redirect(url_for('showItemCatalog'))
+        session.add(newItem)
+        flash('New Item %s Successfully Created' % newItem.item_name)
+        session.commit()
+        return redirect(url_for('showItemCatalog'))
     else:
-      return render_template('newItem.html')
+        return render_template('newItem.html')
 
-#Edit a item
+# Edit a item
+# This is an example of CRUD: Update
 @app.route('/item/<int:id>/edit/', methods = ['GET', 'POST'])
 def editItem(id):
     DBSession = sessionmaker(bind=engine)
@@ -381,7 +347,8 @@ def editItem(id):
         return render_template('editItem.html', item = editedItem)
 
 
-#Delete an item
+# Delete an item
+# This is an example of CRUD: Delete
 @app.route('/item/<int:id>/delete/', methods = ['GET','POST'])
 def deleteItem(id):
     DBSession = sessionmaker(bind=engine)
@@ -404,85 +371,22 @@ def deleteItem(id):
 
 
 
-#Show an item
+# Show an item
+# An example of CRUD: Read
 @app.route('/item/<int:item_id>/')
 def showItem(item_id):
     DBSession = sessionmaker(bind=engine)
     session = DBSession()
-    print "--> in showItem"
-    print "--> item_id: %s" % item_id
     item = session.query(ItemCatalog).filter_by(id = item_id).one()
-    print item
     creator = getUserInfo(ItemCatalog.user_id)
     items = session.query(ItemCatalog).filter_by(id = ItemCatalog.id).all()
-    print "--> creator: %s" % creator
-    print "--> creator.id: %s" % creator.id
-    print "--> items: %s" % items
-    
     username = session.query(User.username).filter_by(id = creator.id).one()
-    print "--> username: %s" % username
-
     #Check if logged in
     if 'username' not in login_session:
-        flash('Must log in to view item detail!!')
+        flash('Must log in to view item detail!')
         return render_template('publicitems.html', items = items)
     else:
         return render_template('item.html', item = item, username = username[0])
-
-
-#Create a new item
-@app.route('/itemsrestaurant/<int:restaurant_id>/menu/new/',methods=['GET','POST'])
-def newMenuItem(restaurant_id):
-    DBSession = sessionmaker(bind=engine)
-    session = DBSession()
-    restaurant = session.query(Restaurant).filter_by(id = restaurant_id).one()
-    if request.method == 'POST':
-        newItem = MenuItem(name = request.form['name'], description = request.form['description'], price = request.form['price'], course = request.form['course'], restaurant_id = restaurant_id, user_id=restaurant.user_id)
-        session.add(newItem)
-        session.commit()
-        flash('New Menu %s Item Successfully Created' % (newItem.name))
-        return redirect(url_for('showMenu', restaurant_id = restaurant_id))
-    else:
-        return render_template('newmenuitem.html', restaurant_id = restaurant_id)
-
-#Edit a menu item
-@app.route('/restaurant/<int:restaurant_id>/menu/<int:menu_id>/edit', methods=['GET','POST'])
-def editMenuItem(restaurant_id, menu_id):
-    DBSession = sessionmaker(bind=engine)
-    session = DBSession()
-    editedItem = session.query(MenuItem).filter_by(id = menu_id).one()
-    restaurant = session.query(Restaurant).filter_by(id = restaurant_id).one()
-    if request.method == 'POST':
-        if request.form['name']:
-            editedItem.name = request.form['name']
-        if request.form['description']:
-            editedItem.description = request.form['description']
-        if request.form['price']:
-            editedItem.price = request.form['price']
-        if request.form['course']:
-            editedItem.course = request.form['course']
-        session.add(editedItem)
-        session.commit() 
-        flash('Menu Item Successfully Edited')
-        return redirect(url_for('showMenu', restaurant_id = restaurant_id))
-    else:
-        return render_template('editmenuitem.html', restaurant_id = restaurant_id, menu_id = menu_id, item = editedItem)
-
-
-#Delete a menu item
-@app.route('/restaurant/<int:restaurant_id>/menu/<int:menu_id>/delete', methods = ['GET','POST'])
-def deleteMenuItem(restaurant_id,menu_id):
-    DBSession = sessionmaker(bind=engine)
-    session = DBSession()
-    restaurant = session.query(Restaurant).filter_by(id = restaurant_id).one()
-    itemToDelete = session.query(MenuItem).filter_by(id = menu_id).one() 
-    if request.method == 'POST':
-        session.delete(itemToDelete)
-        session.commit()
-        flash('Menu Item Successfully Deleted')
-        return redirect(url_for('showMenu', restaurant_id = restaurant_id))
-    else:
-        return render_template('deleteMenuItem.html', item = itemToDelete)
 
 # JSON endpoint to show all items
 @app.route('/items/JSON')
