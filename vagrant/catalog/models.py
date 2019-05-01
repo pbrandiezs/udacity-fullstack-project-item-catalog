@@ -45,6 +45,16 @@ class User(Base):
         user_id = data['id']
         return user_id
 
+    @property
+    def serialize(self):
+        """Return object data in easily serializeable format"""
+        return {
+        'id' : self.id,
+        'username' : self.username,
+        'password_hash' : self.password_hash,
+        'email' : self.email,
+        'picture' : self.picture
+        }
 
 class ItemCatalog(Base):
     __tablename__ = 'ItemCatalog'
@@ -61,7 +71,8 @@ class ItemCatalog(Base):
         'id' : self.id,
         'category_name' : self.category_name,
         'item_name' : self.item_name,
-        'item_description' : self.item_description
+        'item_description' : self.item_description,
+        'user_id' : self.user_id
         }
 
 
