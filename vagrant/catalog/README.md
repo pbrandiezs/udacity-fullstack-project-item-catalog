@@ -80,10 +80,10 @@ While the program is running, connect to the webserver at the link using your br
 http://localhost:8000/
 ## API endpoints
 Reach the API endpoints at:
-'''
+```
 http://localhost:8000/items/JSON
 http://localhost:8000/item/<int:item_id>/JSON
 http://localhost:8000/users/JSON
-'''
+```
 ## Expected Output
 * See the file Expected_Output.doc for screenshots
