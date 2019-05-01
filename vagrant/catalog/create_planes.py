@@ -86,3 +86,59 @@ try:
 except:
     print "Not added - Plane %s" % NewPlane.item_name
     session.rollback()
+
+NewPlane = ItemCatalog(
+    category_name="Crop Duster",
+    item_name="Piper Cub",
+    item_description="Little yellow airplane that spews toxic chemicals on the food supply to kill beneficial insects.",
+    user_id=1
+)
+try:
+    session.add(NewPlane)
+    session.commit()
+    print "Plane %s added" % NewPlane.item_name
+except:
+    print "Not added - Plane %s" % NewPlane.item_name
+    session.rollback()
+
+NewPlane = ItemCatalog(
+    category_name="Falcon",
+    item_name="10X",
+    item_description="The Dassault Mystere/Falcon 10 is an early corporate jet aircraft developed by French aircraft manufacturer Dassault Aviation.",
+    user_id=1
+)
+try:
+    session.add(NewPlane)
+    session.commit()
+    print "Plane %s added" % NewPlane.item_name
+except:
+    print "Not added - Plane %s" % NewPlane.item_name
+    session.rollback()
+
+NewPlane = ItemCatalog(
+    category_name="Embraer",
+    item_name="Phenom 100",
+    item_description="The Embraer EMB-500 Phenom 100 is a very light jet developed by Brazilian aircraft manufacturer Embraer.",
+    user_id=1
+)
+try:
+    session.add(NewPlane)
+    session.commit()
+    print "Plane %s added" % NewPlane.item_name
+except:
+    print "Not added - Plane %s" % NewPlane.item_name
+    session.rollback()
+
+NewPlane = ItemCatalog(
+    category_name="Aerospatiale/BAC",
+    item_name="Concorde",
+    item_description="The Aerospatiale/BAC Concorde is a French-British turbojet-powered supersonic passenger airliner that was operated from 1976 until 2003. It had a maximum speed over twice the speed of sound at Mach 2.04 (1,354 mph or 2,180 km/h at cruise altitude), with seating for 92 to 128 passengers.",
+    user_id=1
+)
+try:
+    session.add(NewPlane)
+    session.commit()
+    print "Plane %s added" % NewPlane.item_name
+except:
+    print "Not added - Plane %s" % NewPlane.item_name
+    session.rollback()
