@@ -3,7 +3,7 @@
 #
 # create_planes.py
 #
-# This program populates the ItemCatalog database with several planes for testing.
+# This program populates the ItemCatalog database with users and several planes for testing.
 #
 
 from sqlalchemy import create_engine

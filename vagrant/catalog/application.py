@@ -1,17 +1,38 @@
 #!/usr/bin/env python
 
-from flask import Flask, render_template, request, redirect,jsonify, url_for, flash
+# Program: application.py 
+# Author: Perry Brandiezs
+# Date: May 1, 2019
 
+# See the README.md at vagrant/catalog/README.md
+# See the expected output document at vagrant/catalog/Expected_Output.docx
+
+
+# This program demonstrates CRUD operations using an Item Catalog.
+
+#   Create: Ability to create an airplane item
+#   Read:   Ability to read an inventory list showing category name, item name, item description.  Ability to show item detail, login required.
+#   Update: Ability to edit item detail, login required.
+#   Delete: Ability to delete an item, login required and must be item creator.
+
+# This program demonstrates OAuth2 authentication and authorization using a third party provider.
+#   Login / Logout using Facebook is provided, link can be found at the top-right of the main screen.
+#   Login required to display item detail, update an item, or delete an item.
+#   Must also be the item creator to delete.
+
+# This program demonstrates API endpoints.
+#   Display all items
+#   Display specific item detail
+#   Display all users
+
+
+from flask import Flask, render_template, request, redirect,jsonify, url_for, flash
 from sqlalchemy import create_engine, asc
 from sqlalchemy.orm import sessionmaker
 from models import Base, User, ItemCatalog
-
-# New imports for this step
 from flask import session as login_session
 import random
 import string
-
-# IMPORTS FOR THIS STEP
 from oauth2client.client import flow_from_clientsecrets
 from oauth2client.client import FlowExchangeError
 import httplib2
@@ -66,7 +87,7 @@ def getUserID(email):
     except:
         return None
 
-
+# Facebook OAuth2 login
 @app.route('/fbconnect', methods=['POST'])
 def fbconnect():
     DBSession = sessionmaker(bind=engine)
@@ -129,7 +150,7 @@ def fbconnect():
     print "done!"
     return output
 
-
+# Facebook OAuth2 logout
 @app.route('/fbdisconnect')
 def fbdisconnect():
     DBSession = sessionmaker(bind=engine)
@@ -312,6 +333,7 @@ def usersJSON():
     users = session.query(User).all()
     return jsonify(users = [user.serialize for user in users])
 
+# Main run web server using port 8000
 if __name__ == '__main__':
   app.secret_key = 'super_secret_key'
   app.debug = True

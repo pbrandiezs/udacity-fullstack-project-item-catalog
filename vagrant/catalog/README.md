@@ -5,7 +5,7 @@
 
 This program demonstrates CRUD operations using an Item Catalog.
 
-*   Create: Ability to crate an airpline item
+*   Create: Ability to create an airplane item
 *   Read:   Ability to read an inventory list showing category name, item name, item description.  Ability to show item detail, login required.
 *   Update: Ability to edit item detail, login required.
 *   Delete: Ability to delete an item, login required and must be item creator.
@@ -61,9 +61,10 @@ https://s3.amazonaws.com/video.udacity-data.com/topher/2018/April/5acfbfa3_fsnd-
 * Connect to the VM: **vagrant ssh**
 * ctrl-d to exit from Vagrant
 ### Data Load Procedures
-Initial testing data can be loaded with the programe create_planes.py.
+Initial database creation is done with the program models.py.  Testing data can be loaded with the programe create_planes.py.
 * Connect to the VM: **vagrant ssh**
 * cd to the shared vagrant directory: **cd /vagrant/catalog**
+* python models.py
 * python create_planes.py
 * ctrl-d to exit from Vagrant
 ## Usage
@@ -86,4 +87,4 @@ http://localhost:8000/item/<int:item_id>/JSON
 http://localhost:8000/users/JSON
 ```
 ## Expected Output
-* See the file Expected_Output.doc for screenshots
+* See the file Expected_Output.docx for screenshots
