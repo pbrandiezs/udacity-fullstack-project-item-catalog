@@ -382,7 +382,7 @@ def showItem(item_id):
     DBSession = sessionmaker(bind=engine)
     session = DBSession()
     item = session.query(ItemCatalog).filter_by(id = item_id).one()
-    creator = getUserInfo(ItemCatalog.user_id)
+    creator = getUserInfo(item.user_id)
     items = session.query(ItemCatalog).filter_by(id = ItemCatalog.id).all()
     username = session.query(User.username).filter_by(id = creator.id).one()
     #Check if logged in
