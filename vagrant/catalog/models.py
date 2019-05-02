@@ -82,6 +82,7 @@ class ItemCatalog(Base):
         """Return object data in easily serializeable format"""
         return {
         'id' : self.id,
+        'category_id' = self.category_id,
         'item_name' : self.item_name,
         'item_description' : self.item_description,
         'user_id' : self.user_id
