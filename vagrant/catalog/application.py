@@ -24,6 +24,7 @@
 #   Display all items
 #   Display specific item detail
 #   Display all users
+#   Display all categories
 
 
 from flask import Flask, render_template, request, redirect,jsonify, url_for, flash
@@ -191,13 +192,21 @@ def showItemCatalog():
     session = DBSession()
     # items = session.query(ItemCatalog).order_by(asc(ItemCatalog.category_name), asc(ItemCatalog.item_name))
     items = session.query(ItemCatalog)
+    categories = session.query(Category).all()
+    categoriesanditems = session.query(Category, ItemCatalog).select_from(ItemCatalog).join(Category, Category.id==ItemCatalog.category_id)
+    categoriesanditemsandusers = session.query(Category, ItemCatalog, User).select_from(ItemCatalog).join(Category, Category.id==ItemCatalog.category_id).join(User, User.id==ItemCatalog.user_id)
+    for a, b in categoriesanditems:
+        print "Category name is: %s" % a.category_name
+        print "item_name is: %s" % b.item_name
+        print "category_id is: %s" % b.category_id
     # check if logged in
     if 'username' not in login_session:
         # not logged in, display public items
-        return render_template('publicitems.html', items = items)
+        return render_template('publicitems.html', categoriesanditems = categoriesanditems)
     else:
         # logged in, display items (including creator)
-        return render_template('items.html', items = items)
+        # return render_template('items.html', items = items)
+        return render_template('items.html', categoriesanditemsandusers = categoriesanditemsandusers)
 
 # Create a new item
 # This is an example of CRUD: Create

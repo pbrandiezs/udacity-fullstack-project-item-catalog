@@ -2,7 +2,7 @@
 
 from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import relationship, sessionmaker
+from sqlalchemy.orm import relationship, sessionmaker, backref
 from sqlalchemy import create_engine
 from passlib.apps import custom_app_context as pwd_context
 import random, string
@@ -61,6 +61,8 @@ class Category(Base):
     id = Column(Integer, primary_key=True)
     category_name = Column(String, index=True)
     
+    
+
     @property
     def serialize(self):
         """Return object data in easily serializeable format"""
@@ -76,6 +78,8 @@ class ItemCatalog(Base):
     item_name = Column(String)
     item_description = Column(String)
     user_id = Column(Integer, ForeignKey('User.id'))
+
+    
 
     @property
     def serialize(self):
