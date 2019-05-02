@@ -333,6 +333,14 @@ def usersJSON():
     users = session.query(User).all()
     return jsonify(users = [user.serialize for user in users])
 
+# JSON endpoint to show all categories
+@app.route('/categories/JSON')
+def categoriesJSON():
+    DBSession = sessionmaker(bind=engine)
+    session = DBSession()
+    categories = session.query(Category).all()
+    return jsonify(categories = [category.serialize for category in categories])
+
 # Main run web server using port 8000
 if __name__ == '__main__':
   app.secret_key = 'super_secret_key'
