@@ -307,7 +307,7 @@ def itemJSON(item_id):
         #not logged in
         return jsonify({"item": [
             {
-                "category_name": item.category_name,
+                "category_id": item.category_id,
                 "id": item.id,
                 "item_description": item.item_description,
                 "item_name": item.item_name,
@@ -317,7 +317,7 @@ def itemJSON(item_id):
         # logged in, include creator with the result
         return jsonify({"item": [
             {
-                "category_name": item.category_name,
+                "category_id": item.category_id,
                 "id": item.id,
                 "item_description": item.item_description,
                 "item_name": item.item_name,
