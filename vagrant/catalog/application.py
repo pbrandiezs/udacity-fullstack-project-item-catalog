@@ -29,7 +29,7 @@
 from flask import Flask, render_template, request, redirect,jsonify, url_for, flash
 from sqlalchemy import create_engine, asc
 from sqlalchemy.orm import sessionmaker
-from models import Base, User, ItemCatalog
+from models import Base, User, ItemCatalog, Category
 from flask import session as login_session
 import random
 import string
