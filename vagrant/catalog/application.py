@@ -302,12 +302,14 @@ def itemJSON(item_id):
     creator = getUserInfo(item.user_id)
     items = session.query(ItemCatalog).filter_by(id = ItemCatalog.id).all()
     username = session.query(User.username).filter_by(id = creator.id).one()
+    category = session.query(Category).filter_by(id = item.category_id).one()
     #Check if logged in
     if 'username' not in login_session:
         #not logged in
         return jsonify({"item": [
             {
                 "category_id": item.category_id,
+                "category_name": category.category_name,
                 "id": item.id,
                 "item_description": item.item_description,
                 "item_name": item.item_name,
@@ -318,6 +320,7 @@ def itemJSON(item_id):
         return jsonify({"item": [
             {
                 "category_id": item.category_id,
+                "category_name": category.category_name,
                 "id": item.id,
                 "item_description": item.item_description,
                 "item_name": item.item_name,
