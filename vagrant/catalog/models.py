@@ -56,10 +56,23 @@ class User(Base):
         'picture' : self.picture
         }
 
+class Category(Base):
+    __tablename__ = 'Category'
+    id = Column(Integer, primary_key=True)
+    category_name = Column(String, index=True)
+    
+    @property
+    def serialize(self):
+        """Return object data in easily serializeable format"""
+        return {
+        'id' : self.id,
+        'category_name' : self.category_name
+        }
+
 class ItemCatalog(Base):
     __tablename__ = 'ItemCatalog'
     id = Column(Integer, primary_key=True)
-    category_name = Column(String)
+    category_id = Column(Integer, ForeignKey('Category.id'))
     item_name = Column(String)
     item_description = Column(String)
     user_id = Column(Integer, ForeignKey('User.id'))
@@ -69,7 +82,6 @@ class ItemCatalog(Base):
         """Return object data in easily serializeable format"""
         return {
         'id' : self.id,
-        'category_name' : self.category_name,
         'item_name' : self.item_name,
         'item_description' : self.item_description,
         'user_id' : self.user_id
