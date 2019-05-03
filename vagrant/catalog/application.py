@@ -235,20 +235,27 @@ def editItem(id):
     DBSession = sessionmaker(bind=engine)
     session = DBSession()
     editedItem = session.query(ItemCatalog).filter_by(id = id).one()
+    categoriesanditems = session.query(Category, ItemCatalog).filter(ItemCatalog.id == id).join(Category, Category.id==ItemCatalog.category_id).one()
     if 'username' not in login_session:
         # not logged in, display public items
         flash("Login required to edit!")
         return redirect(url_for('showItemCatalog'))
     if request.method == 'POST':
         if request.form['item_name'] and request.form['category_name'] and request.form['item_description']:
-            editedItem.category_name = request.form['category_name']
+            category_name = request.form['category_name']
+            NewCategory = Category(category_name = category_name)
+            try:
+                session.add(NewCategory)
+                session.commit()
+            except:
+                session.rollback()
             editedItem.item_name = request.form['item_name']
             editedItem.item_description = request.form['item_description']
             session.add(editedItem)
             session.commit()
             return redirect(url_for('showItemCatalog'))
     else:
-        return render_template('editItem.html', item = editedItem)
+        return render_template('editItem.html', categoriesanditems = categoriesanditems)
 
 
 # Delete an item
