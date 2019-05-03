@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from sqlalchemy import Column, ForeignKey, Integer, String
+from sqlalchemy import Column, ForeignKey, Integer, String, UniqueConstraint
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, sessionmaker, backref
 from sqlalchemy import create_engine
@@ -60,6 +60,7 @@ class Category(Base):
     __tablename__ = 'Category'
     id = Column(Integer, primary_key=True)
     category_name = Column(String, index=True)
+    UniqueConstraint('id', 'category_name')
     
     
 
