@@ -271,7 +271,6 @@ def deleteItem(id):
         flash("Login required to delete!")
         return redirect(url_for('showItemCatalog'))
     if itemToDelete.user_id != login_session['user_id']:
-        # return "<script>function myFunction() {alert('You are not authorized to delete this item.  Please create your own item in order to delete.');}</script><body onload='myFunction()''>"
         flash("Not authorized to delete this item!  Create your own item to delete.")
         return redirect(url_for('showItemCatalog'))
     if request.method == 'POST':
