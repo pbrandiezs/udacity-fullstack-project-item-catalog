@@ -85,6 +85,7 @@ Reach the API endpoints at:
 http://localhost:8000/items/JSON
 http://localhost:8000/item/<int:item_id>/JSON
 http://localhost:8000/users/JSON
+http://localhost:8000/categories/JSON
 ```
 ## Expected Output
 * See the file Expected_Output.docx for screenshots
