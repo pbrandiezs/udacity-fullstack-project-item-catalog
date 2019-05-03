@@ -90,6 +90,8 @@ http://localhost:8000/users/JSON
 * See the file Expected_Output.docx for screenshots
 ## Test Users
 Facebook test users have been created to assist with evaluating this program.  You may use these User ID's for testing.
+When logging in, select the drop down in the facebook login window to switch to a new user, specify the email, and
+an initial password udacity.
 
 Name                            User ID	        Email	
 Samantha Alcfecacfabha Smithsen	100036531361281	owfdypjzrh_1556917027@tfbnw.net
