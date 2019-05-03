@@ -88,3 +88,10 @@ http://localhost:8000/users/JSON
 ```
 ## Expected Output
 * See the file Expected_Output.docx for screenshots
+## Test Users
+Facebook test users have been created to assist with evaluating this program.  You may use these User ID's for testing.
+
+Name                            User ID	        Email	
+Samantha Alcfecacfabha Smithsen	100036531361281	owfdypjzrh_1556917027@tfbnw.net
+Ethan Alcfdejffdaje Alisonberg	100036450664105	vlugcdqxcw_1556917029@tfbnw.net
+Helen Alcfdddicdcbf Goldmanescu	100036444934326	liuvpscgnn_1556917024@tfbnw.net
