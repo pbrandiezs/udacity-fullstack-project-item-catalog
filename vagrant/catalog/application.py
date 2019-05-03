@@ -3,6 +3,7 @@
 # Program: application.py 
 # Author: Perry Brandiezs
 # Date: May 1, 2019
+# Last Updated: May 3, 2019
 
 # See the README.md at vagrant/catalog/README.md
 # See the expected output document at vagrant/catalog/Expected_Output.docx

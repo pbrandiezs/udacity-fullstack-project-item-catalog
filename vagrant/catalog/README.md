@@ -1,6 +1,7 @@
 # Program: application.py 
 * Author: Perry Brandiezs
 * Date: May 1, 2019
+* Last Updated: May 3, 2019
 
 
 This program demonstrates CRUD operations using an Item Catalog.
@@ -94,7 +95,9 @@ Facebook test users have been created to assist with evaluating this program.  Y
 When logging in, select the drop down in the facebook login window to switch to a new user, specify the email, and
 an initial password udacity.
 
+```
 Name                            User ID	        Email	
 Samantha Alcfecacfabha Smithsen	100036531361281	owfdypjzrh_1556917027@tfbnw.net
 Ethan Alcfdejffdaje Alisonberg	100036450664105	vlugcdqxcw_1556917029@tfbnw.net
 Helen Alcfdddicdcbf Goldmanescu	100036444934326	liuvpscgnn_1556917024@tfbnw.net
+```

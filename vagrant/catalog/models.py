@@ -1,5 +1,13 @@
 #!/usr/bin/env python
 
+# Program: models.py 
+# Author: Perry Brandiezs
+# Date: May 1, 2019
+# Last Updated: May 3, 2019
+
+# This program sets up the database used by application.py
+
+
 from sqlalchemy import Column, ForeignKey, Integer, String, UniqueConstraint
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, sessionmaker, backref

@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 
-#
-# create_planes.py
+# Program: create_planes.py 
+# Author: Perry Brandiezs
+# Date: May 1, 2019
+# Last Updated: May 3, 2019
 #
 # This program populates the ItemCatalog database with users and several planes for testing.
 #
