@@ -59,8 +59,8 @@ class User(Base):
 class Category(Base):
     __tablename__ = 'Category'
     id = Column(Integer, primary_key=True)
-    category_name = Column(String, index=True)
-    UniqueConstraint('id', 'category_name')
+    category_name = Column(String, index=True, unique=True)
+    
     
     
 
