@@ -294,12 +294,14 @@ def showItem(item_id):
     creator = getUserInfo(item.user_id)
     items = session.query(ItemCatalog).filter_by(id = ItemCatalog.id).all()
     username = session.query(User.username).filter_by(id = creator.id).one()
+    categoriesanditems = session.query(Category, ItemCatalog).filter(ItemCatalog.id == item_id).join(Category, Category.id==ItemCatalog.category_id).one()
+    category_name = categoriesanditems.Category.category_name
     #Check if logged in
     if 'username' not in login_session:
         flash('Must log in to view item detail!')
-        return render_template('publicitems.html', items = items)
+        return redirect(url_for('showItemCatalog'))
     else:
-        return render_template('item.html', item = item, username = username[0])
+        return render_template('item.html', item = item, username = username[0], category_name = category_name)
 
 # JSON endpoint to show all items
 @app.route('/items/JSON')
