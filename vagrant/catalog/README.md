@@ -96,8 +96,8 @@ When logging in, select the drop down in the facebook login window to switch to 
 an initial password udacity.
 
 ```
-Name                            User ID	        Email	
-Samantha Alcfecacfabha Smithsen	100036531361281	owfdypjzrh_1556917027@tfbnw.net
-Ethan Alcfdejffdaje Alisonberg	100036450664105	vlugcdqxcw_1556917029@tfbnw.net
-Helen Alcfdddicdcbf Goldmanescu	100036444934326	liuvpscgnn_1556917024@tfbnw.net
+Name                            User ID	        Email                           Password
+Samantha Alcfecacfabha Smithsen	100036531361281	owfdypjzrh_1556917027@tfbnw.net udacity
+Ethan Alcfdejffdaje Alisonberg	100036450664105	vlugcdqxcw_1556917029@tfbnw.net udacity
+Helen Alcfdddicdcbf Goldmanescu	100036444934326	liuvpscgnn_1556917024@tfbnw.net udacity
 ```
