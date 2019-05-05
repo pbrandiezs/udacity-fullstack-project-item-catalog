@@ -3,7 +3,7 @@
 # Program: application.py 
 # Author: Perry Brandiezs
 # Date: May 1, 2019
-# Last Updated: May 3, 2019
+# Last Updated: May 4, 2019
 
 # See the README.md at vagrant/catalog/README.md
 # See the expected output document at vagrant/catalog/Expected_Output.docx
@@ -41,6 +41,8 @@ import httplib2
 import json
 from flask import make_response
 import requests
+import ssl
+
 
 app = Flask(__name__)
 
@@ -57,7 +59,8 @@ def showLogin():
     state = ''.join(random.choice(string.ascii_uppercase + string.digits)
                     for x in xrange(32))
     login_session['state'] = state
-    return render_template('login.html', STATE=state)
+    app_id = json.loads(open('fb_client_secrets.json', 'r').read())['web']['app_id']
+    return render_template('login.html', STATE=state, APP_ID=app_id)
 
 
 # User Helper Functions
@@ -102,6 +105,8 @@ def fbconnect():
     #Exchange token for long-lived server-side token
     app_id = json.loads(open('fb_client_secrets.json', 'r').read())['web']['app_id']
     app_secret = json.loads(open('fb_client_secrets.json', 'r').read())['web']['app_secret']
+    print "--> app_id is: %s" % app_id
+    print "--> app_secret is: %s" % app_secret
     url = 'https://graph.facebook.com/oauth/access_token?grant_type=fb_exchange_token&client_id=%s&client_secret=%s&fb_exchange_token=%s' % (app_id, app_secret, access_token)
     h = httplib2.Http()
     result = h.request(url, 'GET')[1]
@@ -120,6 +125,10 @@ def fbconnect():
     h = httplib2.Http()
     result = h.request(url, 'GET')[1]
     data=json.loads(result)
+    print "--> app_id is: %s" % app_id
+    print "--> app_secret is: %s" % app_secret
+    print "--> data is: %s" % data
+    print "--> token is: %s" % token
     login_session['provider'] = 'facebook'
     login_session['username'] = data["name"]
     login_session['email'] = data["email"]
@@ -364,6 +373,8 @@ def categoriesJSON():
 
 # Main run web server using port 8000
 if __name__ == '__main__':
-  app.secret_key = 'super_secret_key'
-  app.debug = True
-  app.run(host = '0.0.0.0', port = 8000)
+    app.secret_key = 'super_secret_key'
+    app.debug = True
+    context = ssl.SSLContext(ssl.PROTOCOL_SSLv23)
+    context = ('ssl.cert', 'ssl.key')
+    app.run(host = '0.0.0.0', port = 8000, ssl_context=context, threaded=True, debug=True)

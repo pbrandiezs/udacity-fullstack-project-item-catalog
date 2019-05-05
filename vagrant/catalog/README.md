@@ -1,7 +1,7 @@
 # Program: application.py 
 * Author: Perry Brandiezs
 * Date: May 1, 2019
-* Last Updated: May 3, 2019
+* Last Updated: May 4, 2019
 
 
 This program demonstrates CRUD operations using an Item Catalog.
@@ -68,6 +68,21 @@ Initial database creation is done with the program models.py.  Testing data can 
 * python models.py
 * python create_planes.py
 * ctrl-d to exit from Vagrant
+## Certificate generation
+* It should not be necessary to generate new certificates if the existing ones included on github are used, however follow these steps if required:
+* cd to the vagrant directory
+* Connect to the VM: **vagrant ssh**
+* cd to the VM's vagrant directory: **cd /vagrant/catalog**
+* openssl genrsa 1024 > ssl.key
+* openssl req -new -x509 -nodes -sha1 -days 365 -key ssl.key > ssl.cert
+* (Tested with the below values)
+* For Country Code: US
+* For State: Nevada
+* For Locality Name: Las Vegas
+* Organization Name: Aces High Aviation
+* Organizatin Unit Name: .
+* Common Name: .
+* Email Address: pbrandiezs@gmail.com
 ## Usage
 The main program can be run with python application.py
 * cd to the vagrant directory
@@ -79,7 +94,13 @@ The main program can be run with python application.py
 * vagrant halt to shutdown the vagrant VM (restart again with vagrant up)
 ## Website
 While the program is running, connect to the webserver at the link using your browser:
-http://localhost:8000/
+https://localhost:8000/
+* Note must use https.
+## Accept the certicate when first connecting
+* Note if a timeout error occurs, please try clearing cache and attempt again.  It will be necessary to Click Advanced / Proceed to localhost
+ when first accessing a link.
+* Click Advanced
+* Click Proceed to localhost
 ## API endpoints
 Reach the API endpoints at:
 ```
@@ -91,13 +112,4 @@ http://localhost:8000/categories/JSON
 ## Expected Output
 * See the file Expected_Output.docx for screenshots
 ## Test Users
-Facebook test users have been created to assist with evaluating this program.  You may use these User ID's for testing.
-When logging in, select the drop down in the facebook login window to switch to a new user, specify the email, and
-an initial password udacity.
-
-```
-Name                            User ID	        Email                           Password
-Samantha Alcfecacfabha Smithsen	100036531361281	owfdypjzrh_1556917027@tfbnw.net udacity
-Ethan Alcfdejffdaje Alisonberg	100036450664105	vlugcdqxcw_1556917029@tfbnw.net udacity
-Helen Alcfdddicdcbf Goldmanescu	100036444934326	liuvpscgnn_1556917024@tfbnw.net udacity
-```
+The application is live with Facebook, use any Facebook id to test.
