@@ -65,7 +65,7 @@ try:
     print "Category %s added" % NewCategory.category_name
 except:
     print "Not added - Category %s" % NewCategory.category_name
-    session.rollback
+    session.rollback()
 
 NewCategory = Category(
     id=2,
@@ -77,7 +77,7 @@ try:
     print "Category %s added" % NewCategory.category_name
 except:
     print "Not added - Category %s" % NewCategory.category_name
-    session.rollback
+    session.rollback()
 
 NewCategory = Category(
     id=3,
@@ -89,7 +89,7 @@ try:
     print "Category %s added" % NewCategory.category_name
 except:
     print "Not added - Category %s" % NewCategory.category_name
-    session.rollback
+    session.rollback()
 
 NewCategory = Category(
     id=4,
@@ -101,7 +101,7 @@ try:
     print "Category %s added" % NewCategory.category_name
 except:
     print "Not added - Category %s" % NewCategory.category_name
-    session.rollback
+    session.rollback()
 
 NewCategory = Category(
     id=5,
@@ -113,7 +113,7 @@ try:
     print "Category %s added" % NewCategory.category_name
 except:
     print "Not added - Category %s" % NewCategory.category_name
-    session.rollback
+    session.rollback()
 
 # Add planes
 NewPlane = ItemCatalog(
