@@ -250,6 +250,9 @@ def editItem(id):
         # not logged in, display public items
         flash("Login required to edit!")
         return redirect(url_for('showItemCatalog'))
+    if editedItem.user_id != login_session['user_id']:
+        flash("Not authorized to edit this item!  Create your own item to edit.")
+        return redirect(url_for('showItemCatalog'))
     if request.method == 'POST':
         if request.form['item_name'] and request.form['category_name'] and request.form['item_description']:
             category_name = request.form['category_name']
