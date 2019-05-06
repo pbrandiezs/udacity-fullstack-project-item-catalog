@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# Program: models.py 
+# Program: models.py
 # Author: Perry Brandiezs
 # Date: May 1, 2019
 # Last Updated: May 3, 2019
@@ -13,13 +13,20 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, sessionmaker, backref
 from sqlalchemy import create_engine
 from passlib.apps import custom_app_context as pwd_context
-import random, string
-from itsdangerous import (TimedJSONWebSignatureSerializer as Serializer, BadSignature, SignatureExpired)
+import random
+import string
+from itsdangerous import (
+    TimedJSONWebSignatureSerializer as Serializer,
+    BadSignature,
+    SignatureExpired)
 
 Base = declarative_base()
 
-#You will use this secret key to create and verify your tokens
-secret_key = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in xrange(32))
+# You will use this secret key to create and verify your tokens
+secret_key = ''.join(
+    random.choice(
+        string.ascii_uppercase + string.digits) for x in xrange(32))
+
 
 class User(Base):
     __tablename__ = 'User'
@@ -34,10 +41,10 @@ class User(Base):
 
     def verify_password(self, password):
         return pwd_context.verify(password, self.password_hash)
-    
+
     def generate_auth_token(self, expiration=600):
-        s = Serializer(secret_key, expires_in = expiration)
-        return s.dumps({'id': self.id })
+        s = Serializer(secret_key, expires_in=expiration)
+        return s.dumps({'id': self.id})
 
     @staticmethod
     def verify_auth_token(token):
@@ -45,10 +52,10 @@ class User(Base):
         try:
             data = s.loads(token)
         except SignatureExpired:
-            #Valid Token, but expired
+            # Valid Token, but expired
             return None
         except BadSignature:
-            #Invalid Token
+            # Invalid Token
             return None
         user_id = data['id']
         return user_id
@@ -57,28 +64,27 @@ class User(Base):
     def serialize(self):
         """Return object data in easily serializeable format"""
         return {
-        'id' : self.id,
-        'username' : self.username,
-        'password_hash' : self.password_hash,
-        'email' : self.email,
-        'picture' : self.picture
-        }
+            'id': self.id,
+            'username': self.username,
+            'password_hash': self.password_hash,
+            'email': self.email,
+            'picture': self.picture
+            }
+
 
 class Category(Base):
     __tablename__ = 'Category'
     id = Column(Integer, primary_key=True)
     category_name = Column(String, index=True, unique=True)
-    
-    
-    
 
     @property
     def serialize(self):
         """Return object data in easily serializeable format"""
         return {
-        'id' : self.id,
-        'category_name' : self.category_name
-        }
+            'id': self.id,
+            'category_name': self.category_name
+            }
+
 
 class ItemCatalog(Base):
     __tablename__ = 'ItemCatalog'
@@ -88,23 +94,17 @@ class ItemCatalog(Base):
     item_description = Column(String)
     user_id = Column(Integer, ForeignKey('User.id'))
 
-    
-
     @property
     def serialize(self):
         """Return object data in easily serializeable format"""
         return {
-        'id' : self.id,
-        'category_id' : self.category_id,
-        'item_name' : self.item_name,
-        'item_description' : self.item_description,
-        'user_id' : self.user_id
-        }
-
-
+            'id': self.id,
+            'category_id': self.category_id,
+            'item_name': self.item_name,
+            'item_description': self.item_description,
+            'user_id': self.user_id
+            }
 
 
 engine = create_engine('sqlite:///ItemCatalog.db')
- 
-
 Base.metadata.create_all(engine)
