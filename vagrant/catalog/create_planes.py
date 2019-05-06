@@ -117,6 +117,7 @@ except:
 
 # Add planes
 NewPlane = ItemCatalog(
+    id=1,
     category_id=1,
     item_name="G650ER",
     item_description="Long range private jet",
@@ -131,6 +132,7 @@ except:
     session.rollback()
 
 NewPlane = ItemCatalog(
+    id=2,
     category_id=1,
     item_name="G550",
     item_description="A very nice jet",
@@ -145,6 +147,7 @@ except:
     session.rollback()
 
 NewPlane = ItemCatalog(
+    id=3,
     category_id=1,
     item_name="G650ER",
     item_description="Mickey Mouse's Long range private jet",
@@ -159,6 +162,7 @@ except:
     session.rollback()
 
 NewPlane = ItemCatalog(
+    id=4,
     category_id=2,
     item_name="Piper Cub",
     item_description="Little yellow airplane that spews toxic chemicals"
@@ -174,6 +178,7 @@ except:
     session.rollback()
 
 NewPlane = ItemCatalog(
+    id=5,
     category_id=3,
     item_name="10X",
     item_description="The Dassault Mystere/Falcon 10 is an early corporate"
@@ -190,6 +195,7 @@ except:
     session.rollback()
 
 NewPlane = ItemCatalog(
+    id=6,
     category_id=4,
     item_name="Phenom 100",
     item_description="The Embraer EMB-500 Phenom 100 is a very light jet"
@@ -205,6 +211,7 @@ except:
     session.rollback()
 
 NewPlane = ItemCatalog(
+    id=7,
     category_id=5,
     item_name="Concorde",
     item_description="The Aerospatiale/BAC Concorde is a French-British"
