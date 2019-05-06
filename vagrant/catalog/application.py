@@ -273,15 +273,15 @@ def newItem():
 def editItem(id):
     DBSession = sessionmaker(bind=engine)
     session = DBSession()
+    if 'username' not in login_session:
+        # not logged in, display public items
+        flash("Login required to edit!")
+        return redirect(url_for('showItemCatalog'))
     editedItem = session.query(ItemCatalog).filter_by(id=id).one()
     categoriesanditems = session.query(
         Category, ItemCatalog).filter(
         ItemCatalog.id == id).join(
         Category, Category.id == ItemCatalog.category_id).one()
-    if 'username' not in login_session:
-        # not logged in, display public items
-        flash("Login required to edit!")
-        return redirect(url_for('showItemCatalog'))
     if editedItem.user_id != login_session['user_id']:
         flash(
               "Not authorized to edit this item!  "
