@@ -277,7 +277,10 @@ def editItem(id):
         # not logged in, display public items
         flash("Login required to edit!")
         return redirect(url_for('showItemCatalog'))
-    editedItem = session.query(ItemCatalog).filter_by(id=id).one()
+    editedItem = session.query(ItemCatalog).filter_by(id=id).one_or_none()
+    if editedItem is None:
+        flash("Item does not exist!")
+        return redirect(url_for('showItemCatalog'))
     categoriesanditems = session.query(
         Category, ItemCatalog).filter(
         ItemCatalog.id == id).join(
