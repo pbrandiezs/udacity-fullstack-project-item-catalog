@@ -36,6 +36,8 @@
 from flask import Flask, render_template, request, redirect, jsonify,\
     url_for, flash
 from sqlalchemy import create_engine, asc
+from sqlalchemy import exc
+from sqlalchemy.orm import exc as orm_exc
 from sqlalchemy.orm import sessionmaker
 from models import Base, User, ItemCatalog, Category
 from flask import session as login_session
@@ -96,7 +98,7 @@ def getUserID(email):
     try:
         user = session.query(User).filter_by(email=email).one()
         return user.id
-    except:
+    except orm_exc.NoResultFound:
         return None
 
 # Facebook OAuth2 login
@@ -249,7 +251,7 @@ def newItem():
         try:
             session.add(NewCategory)
             session.commit()
-        except:
+        except exc.IntegrityError:
             session.rollback()
         new_category_id = session.query(Category.id).filter_by(
                                         category_name=category_name)
@@ -293,7 +295,7 @@ def editItem(id):
             try:
                 session.add(NewCategory)
                 session.commit()
-            except:
+            except exc.IntegrityError:
                 session.rollback()
             editedItem.item_name = request.form['item_name']
             editedItem.item_description = request.form['item_description']

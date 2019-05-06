@@ -10,6 +10,7 @@
 #
 
 from sqlalchemy import create_engine
+from sqlalchemy import exc
 from sqlalchemy.orm import sessionmaker
 from models import Base, User, ItemCatalog, Category
 
@@ -35,7 +36,7 @@ try:
     session.add(NewUser)
     session.commit()
     print "User %s added" % NewUser.username
-except:
+except exc.IntegrityError:
     print "Not added - User %s" % NewUser.username
     session.rollback()
 
@@ -50,7 +51,7 @@ try:
     session.add(NewUser)
     session.commit()
     print "User %s added" % NewUser.username
-except:
+except exc.IntegrityError:
     print "Not added - User %s" % NewUser.username
     session.rollback()
 
@@ -63,7 +64,7 @@ try:
     session.add(NewCategory)
     session.commit()
     print "Category %s added" % NewCategory.category_name
-except:
+except exc.IntegrityError:
     print "Not added - Category %s" % NewCategory.category_name
     session.rollback()
 
@@ -75,7 +76,7 @@ try:
     session.add(NewCategory)
     session.commit()
     print "Category %s added" % NewCategory.category_name
-except:
+except exc.IntegrityError:
     print "Not added - Category %s" % NewCategory.category_name
     session.rollback()
 
@@ -87,7 +88,7 @@ try:
     session.add(NewCategory)
     session.commit()
     print "Category %s added" % NewCategory.category_name
-except:
+except exc.IntegrityError:
     print "Not added - Category %s" % NewCategory.category_name
     session.rollback()
 
@@ -99,7 +100,7 @@ try:
     session.add(NewCategory)
     session.commit()
     print "Category %s added" % NewCategory.category_name
-except:
+except exc.IntegrityError:
     print "Not added - Category %s" % NewCategory.category_name
     session.rollback()
 
@@ -111,7 +112,7 @@ try:
     session.add(NewCategory)
     session.commit()
     print "Category %s added" % NewCategory.category_name
-except:
+except exc.IntegrityError:
     print "Not added - Category %s" % NewCategory.category_name
     session.rollback()
 
@@ -127,7 +128,7 @@ try:
     session.add(NewPlane)
     session.commit()
     print "Plane %s added" % NewPlane.item_name
-except:
+except exc.IntegrityError:
     print "Not added - Plane %s" % NewPlane.item_name
     session.rollback()
 
@@ -142,7 +143,7 @@ try:
     session.add(NewPlane)
     session.commit()
     print "Plane %s added" % NewPlane.item_name
-except:
+except exc.IntegrityError:
     print "Not added - Plane %s" % NewPlane.item_name
     session.rollback()
 
@@ -157,7 +158,7 @@ try:
     session.add(NewPlane)
     session.commit()
     print "Plane %s added" % NewPlane.item_name
-except:
+except exc.IntegrityError:
     print "Not added - Plane %s" % NewPlane.item_name
     session.rollback()
 
@@ -173,7 +174,7 @@ try:
     session.add(NewPlane)
     session.commit()
     print "Plane %s added" % NewPlane.item_name
-except:
+except exc.IntegrityError:
     print "Not added - Plane %s" % NewPlane.item_name
     session.rollback()
 
@@ -190,7 +191,7 @@ try:
     session.add(NewPlane)
     session.commit()
     print "Plane %s added" % NewPlane.item_name
-except:
+except exc.IntegrityError:
     print "Not added - Plane %s" % NewPlane.item_name
     session.rollback()
 
@@ -206,7 +207,7 @@ try:
     session.add(NewPlane)
     session.commit()
     print "Plane %s added" % NewPlane.item_name
-except:
+except exc.IntegrityError:
     print "Not added - Plane %s" % NewPlane.item_name
     session.rollback()
 
@@ -226,6 +227,6 @@ try:
     session.add(NewPlane)
     session.commit()
     print "Plane %s added" % NewPlane.item_name
-except:
+except exc.IntegrityError:
     print "Not added - Plane %s" % NewPlane.item_name
     session.rollback()
