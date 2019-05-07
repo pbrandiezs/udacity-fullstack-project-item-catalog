@@ -62,9 +62,9 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 
-# Create anti-forgery state token
 @app.route('/login')
 def showLogin():
+    """ Create anti-forgery state token. """
     state = ''.join(random.choice(string.ascii_uppercase + string.digits)
                     for x in xrange(32))
     login_session['state'] = state
@@ -73,9 +73,8 @@ def showLogin():
     return render_template('login.html', STATE=state, APP_ID=app_id)
 
 
-# User Helper Functions
-
 def createUser(login_session):
+    """ Helper function to create user. """
     DBSession = sessionmaker(bind=engine)
     session = DBSession()
     newUser = User(username=login_session['username'], email=login_session[
@@ -87,6 +86,7 @@ def createUser(login_session):
 
 
 def getUserInfo(user_id):
+    """ Helper function to get user info. """
     DBSession = sessionmaker(bind=engine)
     session = DBSession()
     user = session.query(User).filter_by(id=user_id).one()
@@ -94,6 +94,7 @@ def getUserInfo(user_id):
 
 
 def getUserID(email):
+    """ Helper function to get user id from email. """
     DBSession = sessionmaker(bind=engine)
     session = DBSession()
     try:
@@ -103,9 +104,9 @@ def getUserID(email):
         return None
 
 
-# Facebook OAuth2 login
 @app.route('/fbconnect', methods=['POST'])
 def fbconnect():
+    """ Facebook OAuth2 login """
     DBSession = sessionmaker(bind=engine)
     session = DBSession()
     if request.args.get('state') != login_session['state']:
@@ -177,9 +178,9 @@ def fbconnect():
     return output
 
 
-# Facebook OAuth2 logout
 @app.route('/fbdisconnect')
 def fbdisconnect():
+    """ Facebook OAuth2 logout. """
     DBSession = sessionmaker(bind=engine)
     session = DBSession()
     facebook_id = login_session['facebook_id']
@@ -194,6 +195,7 @@ def fbdisconnect():
 
 @app.route('/disconnect')
 def disconnect():
+    """ Disconnect session. """
     DBSession = sessionmaker(bind=engine)
     session = DBSession()
     if 'provider' in login_session:
@@ -212,11 +214,14 @@ def disconnect():
         redirect(url_for('showItemCatalog'))
 
 
-# Show all Catalog Items
-# This is an example of CRUD: Read
 @app.route('/')
 @app.route('/items/')
 def showItemCatalog():
+    """
+    Show all Catalog Items.
+
+    This is an example of CRUD: Read.
+    """
     DBSession = sessionmaker(bind=engine)
     session = DBSession()
     categoriesanditems = session.query(
@@ -241,10 +246,13 @@ def showItemCatalog():
                     categoriesanditemsandusers=categoriesanditemsandusers))
 
 
-# Create a new item
-# This is an example of CRUD: Create
 @app.route('/item/new/', methods=['GET', 'POST'])
 def newItem():
+    """
+    Create a new item.
+
+    This is an example of CRUD: Create.
+    """
     DBSession = sessionmaker(bind=engine)
     session = DBSession()
     if 'username' not in login_session:
@@ -272,10 +280,13 @@ def newItem():
         return render_template('newItem.html')
 
 
-# Edit a item
-# This is an example of CRUD: Update
 @app.route('/item/<int:id>/edit/', methods=['GET', 'POST'])
 def editItem(id):
+    """
+    Edit an item.
+
+    This is an example of CRUD: Update.
+    """
     DBSession = sessionmaker(bind=engine)
     session = DBSession()
     if 'username' not in login_session:
@@ -316,10 +327,13 @@ def editItem(id):
                             categoriesanditems=categoriesanditems))
 
 
-# Delete an item
-# This is an example of CRUD: Delete
 @app.route('/item/<int:id>/delete/', methods=['GET', 'POST'])
 def deleteItem(id):
+    """
+    Delete an item.
+
+    This is an example of CRUD: Delete.
+    """
     DBSession = sessionmaker(bind=engine)
     session = DBSession()
     itemToDelete = session.query(ItemCatalog).filter_by(id=id).one()
@@ -341,10 +355,13 @@ def deleteItem(id):
         return render_template('deleteItem.html', item=itemToDelete)
 
 
-# Show an item
-# An example of CRUD: Read
 @app.route('/item/<int:item_id>/')
 def showItem(item_id):
+    """
+    Show an item.
+
+    An example of CRUD: Read
+    """
     DBSession = sessionmaker(bind=engine)
     session = DBSession()
     item = session.query(ItemCatalog).filter_by(id=item_id).one()
@@ -367,18 +384,18 @@ def showItem(item_id):
                 category_name=category_name))
 
 
-# JSON endpoint to show all items
 @app.route('/items/JSON')
 def itemsJSON():
+    """ JSON endpoint to show all items. """
     DBSession = sessionmaker(bind=engine)
     session = DBSession()
     items = session.query(ItemCatalog).all()
     return jsonify(items=[item.serialize for item in items])
 
 
-# JSON endpoint to show a specific item
 @app.route('/item/<int:item_id>/JSON')
 def itemJSON(item_id):
+    """ JSON endpoint to show a specific item. """
     DBSession = sessionmaker(bind=engine)
     session = DBSession()
     item = session.query(ItemCatalog).filter_by(id=item_id).one()
@@ -412,26 +429,26 @@ def itemJSON(item_id):
         })
 
 
-# JSON endpoint to show all users
 @app.route('/users/JSON')
 def usersJSON():
+    """ JSON endpoint to show all users. """
     DBSession = sessionmaker(bind=engine)
     session = DBSession()
     users = session.query(User).all()
     return jsonify(users=[user.serialize for user in users])
 
 
-# JSON endpoint to show all categories
 @app.route('/categories/JSON')
 def categoriesJSON():
+    """ JSON endpoint to show all categories. """
     DBSession = sessionmaker(bind=engine)
     session = DBSession()
     categories = session.query(Category).all()
     return jsonify(categories=[category.serialize for category in categories])
 
 
-# Main run web server using port 8000
 if __name__ == '__main__':
+    """ Main run web server using port 8000. """
     app.secret_key = 'super_secret_key'
     app.debug = True
     context = ssl.SSLContext(ssl.PROTOCOL_SSLv23)
