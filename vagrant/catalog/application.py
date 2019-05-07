@@ -61,6 +61,7 @@ Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
+
 # Create anti-forgery state token
 @app.route('/login')
 def showLogin():
@@ -100,6 +101,7 @@ def getUserID(email):
         return user.id
     except orm_exc.NoResultFound:
         return None
+
 
 # Facebook OAuth2 login
 @app.route('/fbconnect', methods=['POST'])
@@ -174,6 +176,7 @@ def fbconnect():
     flash("you are now logged in as %s" % login_session['username'])
     return output
 
+
 # Facebook OAuth2 logout
 @app.route('/fbdisconnect')
 def fbdisconnect():
@@ -237,6 +240,7 @@ def showItemCatalog():
                     'items.html',
                     categoriesanditemsandusers=categoriesanditemsandusers))
 
+
 # Create a new item
 # This is an example of CRUD: Create
 @app.route('/item/new/', methods=['GET', 'POST'])
@@ -266,6 +270,7 @@ def newItem():
         return redirect(url_for('showItemCatalog'))
     else:
         return render_template('newItem.html')
+
 
 # Edit a item
 # This is an example of CRUD: Update
@@ -361,6 +366,7 @@ def showItem(item_id):
                 username=username[0],
                 category_name=category_name))
 
+
 # JSON endpoint to show all items
 @app.route('/items/JSON')
 def itemsJSON():
@@ -368,6 +374,7 @@ def itemsJSON():
     session = DBSession()
     items = session.query(ItemCatalog).all()
     return jsonify(items=[item.serialize for item in items])
+
 
 # JSON endpoint to show a specific item
 @app.route('/item/<int:item_id>/JSON')
@@ -404,6 +411,7 @@ def itemJSON(item_id):
             }]
         })
 
+
 # JSON endpoint to show all users
 @app.route('/users/JSON')
 def usersJSON():
@@ -411,6 +419,7 @@ def usersJSON():
     session = DBSession()
     users = session.query(User).all()
     return jsonify(users=[user.serialize for user in users])
+
 
 # JSON endpoint to show all categories
 @app.route('/categories/JSON')
