@@ -3,7 +3,7 @@
 # Program: create_planes.py
 # Author: Perry Brandiezs
 # Date: May 1, 2019
-# Last Updated: May 3, 2019
+# Last Updated: May 6, 2019
 #
 # This program populates the ItemCatalog database
 # with users and several planes for testing.
@@ -13,6 +13,11 @@ from sqlalchemy import create_engine
 from sqlalchemy import exc
 from sqlalchemy.orm import sessionmaker
 from models import Base, User, ItemCatalog, Category
+import logging
+
+# Set logger level to info
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
 
 # Connect to Database and create database session
 engine = create_engine('sqlite:///ItemCatalog.db')
@@ -35,9 +40,9 @@ NewUser = User(
 try:
     session.add(NewUser)
     session.commit()
-    print "User %s added" % NewUser.username
+    logging.info("User %s added" % NewUser.username)
 except exc.IntegrityError:
-    print "Not added - User %s" % NewUser.username
+    logging.warning("Not added - User %s" % NewUser.username)
     session.rollback()
 
 NewUser = User(
@@ -50,9 +55,9 @@ NewUser = User(
 try:
     session.add(NewUser)
     session.commit()
-    print "User %s added" % NewUser.username
+    logging.info("User %s added" % NewUser.username)
 except exc.IntegrityError:
-    print "Not added - User %s" % NewUser.username
+    logging.warning("Not added - User %s" % NewUser.username)
     session.rollback()
 
 # Add Categories
@@ -63,9 +68,9 @@ NewCategory = Category(
 try:
     session.add(NewCategory)
     session.commit()
-    print "Category %s added" % NewCategory.category_name
+    logging.info("Category %s added" % NewCategory.category_name)
 except exc.IntegrityError:
-    print "Not added - Category %s" % NewCategory.category_name
+    logging.warning("Not added - Category %s" % NewCategory.category_name)
     session.rollback()
 
 NewCategory = Category(
@@ -75,9 +80,9 @@ NewCategory = Category(
 try:
     session.add(NewCategory)
     session.commit()
-    print "Category %s added" % NewCategory.category_name
+    logging.info("Category %s added" % NewCategory.category_name)
 except exc.IntegrityError:
-    print "Not added - Category %s" % NewCategory.category_name
+    logging.warning("Not added - Category %s" % NewCategory.category_name)
     session.rollback()
 
 NewCategory = Category(
@@ -87,9 +92,9 @@ NewCategory = Category(
 try:
     session.add(NewCategory)
     session.commit()
-    print "Category %s added" % NewCategory.category_name
+    logging.info("Category %s added" % NewCategory.category_name)
 except exc.IntegrityError:
-    print "Not added - Category %s" % NewCategory.category_name
+    logging.warning("Not added - Category %s" % NewCategory.category_name)
     session.rollback()
 
 NewCategory = Category(
@@ -99,9 +104,9 @@ NewCategory = Category(
 try:
     session.add(NewCategory)
     session.commit()
-    print "Category %s added" % NewCategory.category_name
+    logging.info("Category %s added" % NewCategory.category_name)
 except exc.IntegrityError:
-    print "Not added - Category %s" % NewCategory.category_name
+    logging.warning("Not added - Category %s" % NewCategory.category_name)
     session.rollback()
 
 NewCategory = Category(
@@ -111,9 +116,9 @@ NewCategory = Category(
 try:
     session.add(NewCategory)
     session.commit()
-    print "Category %s added" % NewCategory.category_name
+    logging.info("Category %s added" % NewCategory.category_name)
 except exc.IntegrityError:
-    print "Not added - Category %s" % NewCategory.category_name
+    logging.warning("Not added - Category %s" % NewCategory.category_name)
     session.rollback()
 
 # Add planes
@@ -127,9 +132,9 @@ NewPlane = ItemCatalog(
 try:
     session.add(NewPlane)
     session.commit()
-    print "Plane %s added" % NewPlane.item_name
+    logging.info("Plane %s added" % NewPlane.item_name)
 except exc.IntegrityError:
-    print "Not added - Plane %s" % NewPlane.item_name
+    logging.warning("Not added - Plane %s" % NewPlane.item_name)
     session.rollback()
 
 NewPlane = ItemCatalog(
@@ -142,9 +147,9 @@ NewPlane = ItemCatalog(
 try:
     session.add(NewPlane)
     session.commit()
-    print "Plane %s added" % NewPlane.item_name
+    logging.info("Plane %s added" % NewPlane.item_name)
 except exc.IntegrityError:
-    print "Not added - Plane %s" % NewPlane.item_name
+    logging.warning("Not added - Plane %s" % NewPlane.item_name)
     session.rollback()
 
 NewPlane = ItemCatalog(
@@ -157,9 +162,9 @@ NewPlane = ItemCatalog(
 try:
     session.add(NewPlane)
     session.commit()
-    print "Plane %s added" % NewPlane.item_name
+    logging.info("Plane %s added" % NewPlane.item_name)
 except exc.IntegrityError:
-    print "Not added - Plane %s" % NewPlane.item_name
+    logging.warning("Not added - Plane %s" % NewPlane.item_name)
     session.rollback()
 
 NewPlane = ItemCatalog(
@@ -173,9 +178,9 @@ NewPlane = ItemCatalog(
 try:
     session.add(NewPlane)
     session.commit()
-    print "Plane %s added" % NewPlane.item_name
+    logging.info("Plane %s added" % NewPlane.item_name)
 except exc.IntegrityError:
-    print "Not added - Plane %s" % NewPlane.item_name
+    logging.warning("Not added - Plane %s" % NewPlane.item_name)
     session.rollback()
 
 NewPlane = ItemCatalog(
@@ -190,9 +195,9 @@ NewPlane = ItemCatalog(
 try:
     session.add(NewPlane)
     session.commit()
-    print "Plane %s added" % NewPlane.item_name
+    logging.info("Plane %s added" % NewPlane.item_name)
 except exc.IntegrityError:
-    print "Not added - Plane %s" % NewPlane.item_name
+    logging.warning("Not added - Plane %s" % NewPlane.item_name)
     session.rollback()
 
 NewPlane = ItemCatalog(
@@ -206,9 +211,9 @@ NewPlane = ItemCatalog(
 try:
     session.add(NewPlane)
     session.commit()
-    print "Plane %s added" % NewPlane.item_name
+    logging.info("Plane %s added" % NewPlane.item_name)
 except exc.IntegrityError:
-    print "Not added - Plane %s" % NewPlane.item_name
+    logging.warning("Not added - Plane %s" % NewPlane.item_name)
     session.rollback()
 
 NewPlane = ItemCatalog(
@@ -226,7 +231,7 @@ NewPlane = ItemCatalog(
 try:
     session.add(NewPlane)
     session.commit()
-    print "Plane %s added" % NewPlane.item_name
+    logging.info("Plane %s added" % NewPlane.item_name)
 except exc.IntegrityError:
-    print "Not added - Plane %s" % NewPlane.item_name
+    logging.warning("Not added - Plane %s" % NewPlane.item_name)
     session.rollback()
